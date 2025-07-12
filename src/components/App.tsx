@@ -4,6 +4,7 @@ import css from "./App.module.css";
 import SearchBar from "./SearchBar/SearchBar";
 import { fetchMovies } from "../services/movieService";
 import type { Movie } from "../types/movie";
+import MovieGrid from "./MovieGrid/MovieGrid";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -11,8 +12,8 @@ function App() {
   const handleSearch = async (movie: string) => {
     try {
       const data = await fetchMovies(movie);
-      if(data.length === 0){
-        toast.error('No movies found for your request.')
+      if (data.length === 0) {
+        toast.error("No movies found for your request.");
       }
       setMovies(data);
     } catch (error) {
@@ -23,6 +24,7 @@ function App() {
   return (
     <div className={css.app}>
       <SearchBar onSubmit={handleSearch} />
+      {movies.length > 0 && <MovieGrid onSelect={true} movies={movies}  />}
       <Toaster />
     </div>
   );
