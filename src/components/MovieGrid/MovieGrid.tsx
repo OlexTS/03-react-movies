@@ -3,8 +3,8 @@ import noImage from "../../assets/depositphotos_247872612-stock-illustration-no-
 import type { Movie } from "../../types/movie";
 
 interface MovieGridProps {
-    onSelect: ()=>void,
-    movies: Movie[]
+  onSelect: () => void;
+  movies: Movie[];
 }
 
 const MovieGrid = ({ onSelect, movies }: MovieGridProps) => {
@@ -13,7 +13,7 @@ const MovieGrid = ({ onSelect, movies }: MovieGridProps) => {
   return (
     <ul className={css.grid}>
       {movies.map((movie) => (
-        <li>
+        <li onClick={onSelect}>
           <div className={css.card}>
             <img
               className={css.image}
