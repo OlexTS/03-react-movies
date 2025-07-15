@@ -56,7 +56,9 @@ function App() {
         )
       )}
       {isLoading && <Loader />}
-      {isModalOpen && <MovieModal onClose={handleModalClose} movie={selectedMovie} />}
+      {isModalOpen && selectedMovie && (
+        <MovieModal onClose={handleModalClose} movie={selectedMovie} />
+      )}
       <Toaster />
     </div>
   );

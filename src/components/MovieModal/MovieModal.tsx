@@ -1,6 +1,9 @@
+import { createPortal } from "react-dom";
 import type { Movie } from "../../types/movie";
 import css from "./MovieModal.module.css";
 import noImage from "../../assets/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg";
+
+const modalRef = document.querySelector("#modal-root")!;
 
 interface MovieModalProps {
   onClose: () => void;
@@ -8,7 +11,7 @@ interface MovieModalProps {
 }
 
 const MovieModal = ({ onClose, movie }: MovieModalProps) => {
-  return (
+  return createPortal(
     <div className={css.backdrop} role="dialog" aria-modal="true">
       <div className={css.modal}>
         <button
@@ -34,11 +37,12 @@ const MovieModal = ({ onClose, movie }: MovieModalProps) => {
             <strong>Release Date:</strong> {movie.release_date}
           </p>
           <p>
-            <strong>Rating:</strong> {movie.vote_average }/10
+            <strong>Rating:</strong> {movie.vote_average}/10
           </p>
         </div>
       </div>
-    </div>
+    </div>,
+    modalRef
   );
 };
 
