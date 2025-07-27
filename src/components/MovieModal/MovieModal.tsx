@@ -2,6 +2,7 @@ import { createPortal } from "react-dom";
 import type { Movie } from "../../types/movie";
 import css from "./MovieModal.module.css";
 import noImage from "../../assets/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg";
+import { useEffect } from "react";
 
 const modalRef = document.querySelector("#modal-root")!;
 
@@ -11,8 +12,33 @@ interface MovieModalProps {
 }
 
 const MovieModal = ({ onClose, movie }: MovieModalProps) => {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
   return createPortal(
-    <div className={css.backdrop} role="dialog" aria-modal="true">
+    <div
+      className={css.backdrop}
+      role="dialog"
+      aria-modal="true"
+      onClick={handleBackdropClick}
+    >
       <div className={css.modal}>
         <button
           className={css.closeButton}
